@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('penghuni', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_lengkap', 150);
+            $table->string('foto_ktp', 255)->nullable();
+            $table->enum('status_penghuni', ['tetap', 'kontrak']);
+            $table->string('nomor_telepon', 20)->nullable();
+            $table->boolean('status_menikah')->default(false);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('penghuni');
+    }
+};

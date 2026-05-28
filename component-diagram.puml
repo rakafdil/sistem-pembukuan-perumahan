@@ -1,0 +1,87 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram – RT Administration System Backend
+
+LAYOUT_LEFT_RIGHT()
+
+' =========================================================
+' EXTERNAL SYSTEMS
+' =========================================================
+
+Person(admin, "Admin RT")
+
+Container(spa, "Frontend Application", "React + TypeScript", "Antarmuka pengguna")
+
+ContainerDb(db, "MySQL Database", "MySQL", "Menyimpan data aplikasi")
+
+Container(storage, "File Storage", "Local Storage", "Menyimpan foto KTP")
+
+' =========================================================
+' BACKEND CONTAINER
+' =========================================================
+
+Container_Boundary(api, "Laravel API Application") {
+
+    Component(penghuni_mgr, "Penghuni Manager", "Controller + Eloquent", "Mengelola data penghuni")
+
+    Component(rumah_mgr, "Rumah Manager", "Controller + Eloquent", "Mengelola rumah & histori penghuni")
+
+    Component(payment_mgr, "Payment Manager", "Controller + Service", "Mengelola transaksi pembayaran")
+
+    Component(billing_svc, "Billing Service", "Service Class", "Generate tagihan bulanan")
+
+    Component(expense_mgr, "Expense Manager", "Controller + Eloquent", "Mengelola pengeluaran")
+
+    Component(report_svc, "Report Service", "Service Class", "Generate laporan & grafik")
+}
+
+' =========================================================
+' USER FLOW
+' =========================================================
+
+Rel(admin, spa, "Menggunakan aplikasi")
+
+' =========================================================
+' FRONTEND → BACKEND
+' =========================================================
+
+Rel_D(spa, penghuni_mgr, "CRUD penghuni")
+
+Rel_D(spa, rumah_mgr, "CRUD rumah")
+
+Rel_D(spa, payment_mgr, "Kelola pembayaran")
+
+Rel_D(spa, expense_mgr, "Kelola pengeluaran")
+
+Rel_D(spa, report_svc, "Lihat laporan")
+
+' =========================================================
+' INTERNAL SERVICE FLOW
+' =========================================================
+
+Rel_D(payment_mgr, billing_svc, "Generate tagihan tambahan")
+
+' =========================================================
+' DATABASE ACCESS
+' =========================================================
+
+Rel_D(penghuni_mgr, db, "Read/Write")
+
+Rel_D(rumah_mgr, db, "Read/Write")
+
+Rel_D(payment_mgr, db, "Read/Write")
+
+Rel_D(billing_svc, db, "Generate bills")
+
+Rel_D(expense_mgr, db, "Read/Write")
+
+Rel_D(report_svc, db, "Aggregated queries")
+
+' =========================================================
+' FILE STORAGE
+' =========================================================
+
+Rel_R(penghuni_mgr, storage, "Store KTP")
+
+@enduml
