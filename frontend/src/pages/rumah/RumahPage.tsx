@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PageHeader } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
@@ -28,60 +28,121 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useDB, store, type Rumah } from "@/lib/store";
+
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Plus, Pencil, Eye } from "lucide-react";
 import { toast } from "sonner";
 
+import {
+  formRumahSchema,
+  type FormRumahDTO,
+  type Rumah,
+} from "@/features/rumah/types";
+import {
+  useCreateRumah,
+  useGetRumah,
+  useUpdateRumah,
+} from "@/features/rumah/hooks/useRumah";
+import { useGetPenghuni } from "@/features/penghuni/hooks/usePenghuni";
+
 export default function RumahPage() {
-  const { rumah, penghuni } = useDB();
+  // const { rumah, penghuni } = rumahCrud.useGet()
+  const { data } = useGetRumah();
+  const { data: penghuni } = useGetPenghuni();
+
+  const createMutation = useCreateRumah();
+  const updateMutation = useUpdateRumah();
+
   const [open, setOpen] = useState(false);
+
   const [editing, setEditing] = useState<Rumah | null>(null);
-  const [form, setForm] = useState<{ nomor: string; alamat: string; penghuniAktifId?: string }>({
-    nomor: "",
-    alamat: "",
+
+  const form = useForm<FormRumahDTO>({
+    resolver: zodResolver(formRumahSchema),
+    defaultValues: {
+      blok_nomor: "",
+    },
   });
+
+  const { register, handleSubmit, control, reset } = form;
 
   function openAdd() {
     setEditing(null);
-    setForm({ nomor: "", alamat: "" });
+    reset({ blok_nomor: "" });
     setOpen(true);
   }
+
   function openEdit(r: Rumah) {
     setEditing(r);
-    setForm({ nomor: r.nomor, alamat: r.alamat, penghuniAktifId: r.penghuniAktifId });
     setOpen(true);
   }
 
-  function submit() {
-    if (!form.nomor) {
-      toast.error("Nomor rumah wajib diisi");
-      return;
+  useEffect(() => {
+    if (editing) {
+      reset({
+        blok_nomor: editing.blok_nomor ?? "",
+        penghuni_id: editing.penghuni_aktif?.id,
+      });
+    } else {
+      reset({
+        blok_nomor: "",
+      });
+    }
+  }, [editing, open, reset]);
+
+  const submit = (data: FormRumahDTO) => {
+    const formData = new FormData();
+    formData.append("blok_nomor", data.blok_nomor);
+
+    if (data.penghuni_id) {
+      formData.append("penghuni_id", data.penghuni_id);
+      formData.append("tanggal_mulai", new Date().toISOString().split("T")[0]);
+    }
+
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
     if (editing) {
-      const old = editing.penghuniAktifId;
-      store.updateRumah(editing.id, { nomor: form.nomor, alamat: form.alamat });
-      if (form.penghuniAktifId !== old) {
-        store.setPenghuniRumah(editing.id, form.penghuniAktifId || undefined);
-      }
-      toast.success("Rumah diperbarui");
-    } else {
-      store.addRumah({
-        nomor: form.nomor,
-        alamat: form.alamat,
-        penghuniAktifId: form.penghuniAktifId,
-      });
-      toast.success("Rumah ditambahkan");
-    }
-    setOpen(false);
-  }
+      updateMutation.mutate(
+        {
+          id: editing.id,
+          data: formData,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Penghuni berhasil diperbarui");
 
-  const getNama = (id?: string) => penghuni.find((p) => p.id === id)?.nama;
+            setOpen(false);
+          },
+
+          onError: (error) => {
+            console.log(error)
+            toast.error("Gagal memperbarui penghuni");
+          },
+        },
+      );
+    } else {
+      createMutation.mutate(formData, {
+        onSuccess: () => {
+          toast.success("Penghuni berhasil ditambahkan");
+
+          setOpen(false);
+        },
+
+        onError: () => {
+          toast.error("Gagal menambahkan penghuni");
+        },
+      });
+    }
+  };
 
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto">
       <PageHeader
         title="Rumah"
-        description={`Total ${rumah.length} rumah • ${rumah.filter((r) => r.penghuniAktifId).length} dihuni`}
+        description={`Total ${data?.length} rumah • ${data?.filter((r) => r.penghuni_aktif).length} dihuni`}
         action={
           <Button onClick={openAdd}>
             <Plus className="h-4 w-4" /> Tambah Rumah
@@ -94,7 +155,6 @@ export default function RumahPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Nomor</TableHead>
                 <TableHead>Alamat</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Penghuni Aktif</TableHead>
@@ -102,12 +162,14 @@ export default function RumahPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {rumah.map((r) => (
+              {data?.map((r) => (
                 <TableRow key={r.id}>
-                  <TableCell className="font-medium">{r.nomor}</TableCell>
-                  <TableCell className="text-muted-foreground">{r.alamat}</TableCell>
+                  <TableCell className="font-medium">{r.blok_nomor}</TableCell>
+                  {/* <TableCell className="text-muted-foreground">
+                    {r.alamat}
+                  </TableCell> */}
                   <TableCell>
-                    {r.penghuniAktifId ? (
+                    {r.penghuni_aktif ? (
                       <Badge className="bg-[oklch(0.62_0.15_155)] text-white hover:bg-[oklch(0.62_0.15_155)]">
                         Dihuni
                       </Badge>
@@ -116,7 +178,9 @@ export default function RumahPage() {
                     )}
                   </TableCell>
                   <TableCell>
-                    {getNama(r.penghuniAktifId) || <span className="text-muted-foreground">—</span>}
+                    {r.penghuni_aktif?.nama_lengkap || (
+                      <span className="text-muted-foreground">—</span>
+                    )}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon" asChild>
@@ -124,7 +188,11 @@ export default function RumahPage() {
                         <Eye className="h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => openEdit(r)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => openEdit(r)}
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                   </TableCell>
@@ -137,54 +205,62 @@ export default function RumahPage() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{editing ? "Edit Rumah" : "Tambah Rumah"}</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label>Nomor Rumah</Label>
-              <Input
-                value={form.nomor}
-                onChange={(e) => setForm({ ...form, nomor: e.target.value })}
-                className="mt-1.5"
-              />
+          <form
+            onSubmit={handleSubmit(submit, (errors) =>
+              console.log("ERROR", errors),
+            )}
+          >
+            <DialogHeader>
+              <DialogTitle>
+                {editing ? "Edit Rumah" : "Tambah Rumah"}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label>Nomor Rumah</Label>
+                <Input {...register("blok_nomor")} className="mt-1.5" />
+              </div>
+              <div>
+                <Label>Penghuni Aktif</Label>
+                <Controller
+                  control={control}
+                  name="penghuni_id"
+                  render={({ field }) => (
+                    <Select
+                      value={field.value ?? "none"}
+                      onValueChange={(value) =>
+                        field.onChange(value === "none" ? undefined : value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pilih penghuni" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        <SelectItem value="none">Tidak ada penghuni</SelectItem>
+
+                        {penghuni?.map((p) => (
+                          <SelectItem key={p.id} value={String(p.id)}>
+                            {p.nama_lengkap}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
             </div>
-            <div>
-              <Label>Alamat</Label>
-              <Input
-                value={form.alamat}
-                onChange={(e) => setForm({ ...form, alamat: e.target.value })}
-                className="mt-1.5"
-              />
-            </div>
-            <div>
-              <Label>Penghuni Aktif</Label>
-              <Select
-                value={form.penghuniAktifId || "_none"}
-                onValueChange={(v) =>
-                  setForm({ ...form, penghuniAktifId: v === "_none" ? undefined : v })
-                }
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
               >
-                <SelectTrigger className="mt-1.5">
-                  <SelectValue placeholder="Pilih penghuni" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="_none">Tidak dihuni</SelectItem>
-                  {penghuni.map((p) => (
-                    <SelectItem key={p.id} value={p.id}>
-                      {p.nama} ({p.status})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Batal
-            </Button>
-            <Button onClick={submit}>Simpan</Button>
-          </DialogFooter>
+                Batal
+              </Button>
+              <Button type="submit">Simpan</Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

@@ -15,6 +15,6 @@ export const createPenghuni = async (data: FormData): Promise<Penghuni> => {
   return response.data.data;
 };
 
-export const deletePenghuni = async (id: number): Promise<void> => {
+export const deletePenghuni = async (id: string): Promise<void> => {
   await api.delete(`penghuni/${id}`);
 };

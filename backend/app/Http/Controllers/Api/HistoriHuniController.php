@@ -19,17 +19,19 @@ class HistoriHuniController extends Controller
 
     public function assign(AssignPenghuniRequest $request, Rumah $rumah)
     {
+        $penghuni = $request->validated();
+
         if ($rumah->status_huni === 'dihuni') {
             return response()->json([
                 'message' => 'Rumah ini masih dihuni. Keluarkan penghuni sebelumnya terlebih dahulu.'
             ], 422);
         }
 
-        DB::transaction(function () use ($request, $rumah) {
+        DB::transaction(function () use ($penghuni, $rumah) {
             HistoriHuni::create([
                 'rumah_id' => $rumah->id,
-                'penghuni_id' => $request->penghuni_id,
-                'tanggal_mulai' => $request->tanggal_mulai,
+                'penghuni_id' => $penghuni->penghuni_id,
+                'tanggal_mulai' => $penghuni->tanggal_mulai,
                 'tanggal_selesai' => null,
             ]);
 
@@ -41,6 +43,8 @@ class HistoriHuniController extends Controller
 
     public function unassign(UnassignPenghuniRequest $request, Rumah $rumah)
     {
+        $selesai = $request->validated();
+
         $historiAktif = HistoriHuni::where('rumah_id', $rumah->id)
             ->whereNull('tanggal_selesai')
             ->first();
@@ -49,8 +53,8 @@ class HistoriHuniController extends Controller
             return response()->json(['message' => 'Tidak ada penghuni aktif di rumah ini.'], 400);
         }
 
-        DB::transaction(function () use ($request, $rumah, $historiAktif) {
-            $historiAktif->update(['tanggal_selesai' => $request->tanggal_selesai]);
+        DB::transaction(function () use ($selesai, $rumah, $historiAktif) {
+            $historiAktif->update(['tanggal_selesai' => $selesai->tanggal_selesai]);
 
             $rumah->update(['status_huni' => 'kosong']);
         });

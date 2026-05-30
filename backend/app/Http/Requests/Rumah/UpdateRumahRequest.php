@@ -27,6 +27,8 @@ class UpdateRumahRequest extends FormRequest
                 'max:50',
                 Rule::unique('rumah', 'blok_nomor')->ignore($rumah?->id),
             ],
+            'penghuni_id' => ['sometimes', 'string'],
+            'tanggal_mulai' => ['sometimes', 'date'],
         ];
     }
 }

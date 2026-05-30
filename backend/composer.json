@@ -18,7 +18,7 @@
         "fakerphp/faker": "^1.23",
         "knuckleswtf/scribe": "^5.10",
         "laravel/boost": "^2.2",
-        "laravel/pail": "^1.2.5",
+        "laravel/pail": "^1.2",
         "laravel/pao": "^1.0.6",
         "laravel/pint": "^1.27",
         "mockery/mockery": "^1.6",

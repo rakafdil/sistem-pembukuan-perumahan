@@ -70,7 +70,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":[]}'
+        content: '{"data":[{"id":7,"nama_lengkap":"adfasdf","foto_ktp_url":null,"status_penghuni":"tetap","nomor_telepon":null,"status_menikah":false,"status_menikah_label":"Belum Menikah","bergabung_sejak":"29 May 2026"},{"id":3,"nama_lengkap":"M. Raka","foto_ktp_url":"http://localhost:8000/storage/foto_ktp/ggmhWvZzXPhOVCenDWEvSEx2drhl46Rh7SEtmfUk.jpg","status_penghuni":"kontrak","nomor_telepon":"3232123","status_menikah":false,"status_menikah_label":"Belum Menikah","bergabung_sejak":"29 May 2026"},{"id":2,"nama_lengkap":"Raka Fadillah","foto_ktp_url":"http://localhost:8000/storage/foto_ktp/gMBM4fYWFy9xdgWGaT5Agz6PvfS2h4RoSkGJIGrf.png","status_penghuni":"tetap","nomor_telepon":"123123123","status_menikah":true,"status_menikah_label":"Menikah","bergabung_sejak":"29 May 2026"},{"id":1,"nama_lengkap":"Raka","foto_ktp_url":"http://localhost:8000/storage/foto_ktp/ffkiRZ9ukdH8Pw5frP2fXnXZBqOnDFe8bEBJZl9G.png","status_penghuni":"tetap","nomor_telepon":"085336678947","status_menikah":false,"status_menikah_label":"Belum Menikah","bergabung_sejak":"29 May 2026"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -142,7 +142,7 @@ endpoints:
         name: status_penghuni
         description: ''
         required: true
-        example: kontrak
+        example: tetap
         type: string
         enumValues:
           - tetap
@@ -164,7 +164,7 @@ endpoints:
     cleanBodyParameters:
       nomor_telepon: bngzmiyvdljnikhw
       nama_lengkap: a
-      status_penghuni: kontrak
+      status_penghuni: tetap
       status_menikah: false
     fileParameters:
       foto_ktp: null
@@ -198,14 +198,14 @@ endpoints:
         name: id
         description: 'The ID of the penghuni.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 16
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -214,11 +214,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\Penghuni] 16"
-          }
+        status: 200
+        content: '{"data":{"id":1,"nama_lengkap":"Raka","foto_ktp_url":"http://localhost:8000/storage/foto_ktp/ffkiRZ9ukdH8Pw5frP2fXnXZBqOnDFe8bEBJZl9G.png","status_penghuni":"tetap","nomor_telepon":"085336678947","status_menikah":false,"status_menikah_label":"Belum Menikah","bergabung_sejak":"29 May 2026"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -254,14 +251,14 @@ endpoints:
         name: id
         description: 'The ID of the penghuni.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 16
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -316,7 +313,7 @@ endpoints:
         name: status_menikah
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -326,7 +323,7 @@ endpoints:
       nomor_telepon: bngzmiyvdljnikhw
       nama_lengkap: a
       status_penghuni: tetap
-      status_menikah: false
+      status_menikah: true
     fileParameters:
       foto_ktp: null
     responses: []
@@ -359,14 +356,14 @@ endpoints:
         name: id
         description: 'The ID of the penghuni.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 16
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -407,7 +404,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"data":[]}'
+        content: '{"data":[{"id":1,"blok_nomor":"b","status_huni":"dihuni","penghuni_aktif":null}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -457,7 +454,7 @@ endpoints:
         name: status_huni
         description: ''
         required: true
-        example: dihuni
+        example: kosong
         type: string
         enumValues:
           - dihuni
@@ -465,9 +462,21 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      penghuni_id:
+        custom: []
+        name: penghuni_id
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       blok_nomor: b
-      status_huni: dihuni
+      status_huni: kosong
+      penghuni_id: architecto
     fileParameters: []
     responses: []
     responseFields: []
@@ -499,14 +508,14 @@ endpoints:
         name: id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 16
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -515,11 +524,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\Rumah] 16"
-          }
+        status: 200
+        content: '{"data":{"id":1,"blok_nomor":"b","status_huni":"dihuni","penghuni_aktif":null,"histori_huni":[]}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -555,14 +561,14 @@ endpoints:
         name: id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 16
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -610,14 +616,14 @@ endpoints:
         name: id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 16
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -653,14 +659,14 @@ endpoints:
         name: rumah_id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      rumah_id: 16
+      rumah_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -669,11 +675,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\Rumah] 16"
-          }
+        status: 200
+        content: '{"data":[]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -708,14 +711,14 @@ endpoints:
         name: rumah_id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      rumah_id: 16
+      rumah_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -735,7 +738,7 @@ endpoints:
         name: tanggal_mulai
         description: 'Must be a valid date.'
         required: true
-        example: '2026-05-29T10:46:13'
+        example: '2026-05-30T01:21:21'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -743,7 +746,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       penghuni_id: architecto
-      tanggal_mulai: '2026-05-29T10:46:13'
+      tanggal_mulai: '2026-05-30T01:21:21'
     fileParameters: []
     responses: []
     responseFields: []
@@ -775,14 +778,14 @@ endpoints:
         name: rumah_id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      rumah_id: 16
+      rumah_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -791,14 +794,14 @@ endpoints:
         name: tanggal_selesai
         description: 'Must be a valid date.'
         required: true
-        example: '2026-05-29T10:46:14'
+        example: '2026-05-30T01:21:21'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      tanggal_selesai: '2026-05-29T10:46:14'
+      tanggal_selesai: '2026-05-30T01:21:21'
     fileParameters: []
     responses: []
     responseFields: []
@@ -830,14 +833,14 @@ endpoints:
         name: rumah_id
         description: 'The ID of the rumah.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      rumah_id: 16
+      rumah_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -846,11 +849,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: |-
-          {
-              "message": "No query results for model [App\\Models\\Rumah] 16"
-          }
+        status: 200
+        content: '{"data":[]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1046,7 +1046,7 @@ endpoints:
         name: tanggal_bayar
         description: 'Must be a valid date.'
         required: true
-        example: '2026-05-29T10:46:15'
+        example: '2026-05-30T01:21:22'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1098,7 +1098,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       rumah_id: architecto
-      tanggal_bayar: '2026-05-29T10:46:15'
+      tanggal_bayar: '2026-05-30T01:21:22'
       total_bayar: 22
       metode_pembayaran: g
       catatan: architecto
@@ -1265,7 +1265,7 @@ endpoints:
         name: tanggal_pengeluaran
         description: 'Must be a valid date.'
         required: true
-        example: '2026-05-29T10:46:15'
+        example: '2026-05-30T01:21:23'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1274,7 +1274,7 @@ endpoints:
     cleanBodyParameters:
       deskripsi: architecto
       nominal: 22
-      tanggal_pengeluaran: '2026-05-29T10:46:15'
+      tanggal_pengeluaran: '2026-05-30T01:21:23'
     fileParameters: []
     responses: []
     responseFields: []
@@ -1411,7 +1411,7 @@ endpoints:
         name: tanggal_pengeluaran
         description: 'Must be a valid date.'
         required: false
-        example: '2026-05-29T10:46:15'
+        example: '2026-05-30T01:21:23'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1420,7 +1420,7 @@ endpoints:
     cleanBodyParameters:
       deskripsi: architecto
       nominal: 22
-      tanggal_pengeluaran: '2026-05-29T10:46:15'
+      tanggal_pengeluaran: '2026-05-30T01:21:23'
     fileParameters: []
     responses: []
     responseFields: []

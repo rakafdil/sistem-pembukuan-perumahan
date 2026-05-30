@@ -15,7 +15,8 @@ class StoreRumahRequest extends FormRequest
     {
         return [
             'blok_nomor' => ['required', 'string', 'max:50', 'unique:rumah,blok_nomor'],
-            'status_huni' => ['required', 'in:dihuni,kosong'],
+            'penghuni_id' => ['sometimes', 'string'],
+            'tanggal_mulai' => ['sometimes', 'date'],
         ];
     }
 }

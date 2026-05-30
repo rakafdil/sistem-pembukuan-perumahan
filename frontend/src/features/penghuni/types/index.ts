@@ -1,12 +1,12 @@
 import { z } from "zod";
 
 export const penghuniSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   nama_lengkap: z.string(),
   status_penghuni: z.enum(["tetap", "kontrak"]),
   status_menikah: z.boolean(),
   nomor_telepon: z.string().nullable(),
-  foto_ktp: z.string().nullable(),
+  foto_ktp_url: z.string().nullable(),
 });
 
 export type Penghuni = z.infer<typeof penghuniSchema>;

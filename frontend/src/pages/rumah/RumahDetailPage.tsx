@@ -11,14 +11,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDB, formatRp, monthLabel } from "@/lib/store";
+import { formatRp, monthLabel } from "@/lib/formatters";
 import { ArrowLeft } from "lucide-react";
+import {
+  useGetHistoriRumah,
+  useGetRumah,
+  useGetRumahById,
+} from "@/features/rumah/hooks/useRumah";
 
 export default function RumahDetailPage() {
   const { id = "" } = useParams<{ id: string }>();
-  const { rumah, penghuni, pembayaran } = useDB();
-  const r = rumah.find((x) => x.id === id);
-  if (!r)
+  const { data: histori } = useGetHistoriRumah(id);
+  const { data: rumah } = useGetRumahById(id);
+  if (!histori)
     return (
       <div className="p-8">
         Rumah tidak ditemukan.{" "}
@@ -27,7 +32,7 @@ export default function RumahDetailPage() {
         </Link>
       </div>
     );
-  const getNama = (pid: string) => penghuni.find((p) => p.id === pid)?.nama || "—";
+
   const bayar = pembayaran
     .filter((p) => p.rumahId === r.id)
     .sort((a, b) => b.periode.localeCompare(a.periode));
@@ -44,22 +49,28 @@ export default function RumahDetailPage() {
       <div className="grid lg:grid-cols-3 gap-4 mb-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm text-muted-foreground">Status</CardTitle>
+            <CardTitle className="text-sm text-muted-foreground">
+              Status
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            {r.penghuniAktifId ? (
-              <Badge className="bg-[oklch(0.62_0.15_155)] text-white">Dihuni</Badge>
+            {rumah?.penghuni_aktif ? (
+              <Badge className="bg-[oklch(0.62_0.15_155)] text-white">
+                Dihuni
+              </Badge>
             ) : (
               <Badge variant="secondary">Tidak Dihuni</Badge>
             )}
             <div className="mt-2 text-lg font-medium">
-              {r.penghuniAktifId ? getNama(r.penghuniAktifId) : "—"}
+              {rumah?.penghuni_aktif ? rumah?.penghuni_aktif.nama_lengkap : "—"}
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm text-muted-foreground">Total Pembayaran</CardTitle>
+            <CardTitle className="text-sm text-muted-foreground">
+              Total Pembayaran
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-semibold">
@@ -76,7 +87,9 @@ export default function RumahDetailPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm text-muted-foreground">Tunggakan</CardTitle>
+            <CardTitle className="text-sm text-muted-foreground">
+              Tunggakan
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-semibold text-destructive">
@@ -102,7 +115,10 @@ export default function RumahDetailPage() {
             <TableBody>
               {r.histori.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={3} className="text-center text-muted-foreground py-6">
+                  <TableCell
+                    colSpan={3}
+                    className="text-center text-muted-foreground py-6"
+                  >
                     Belum ada historis
                   </TableCell>
                 </TableRow>
@@ -115,7 +131,11 @@ export default function RumahDetailPage() {
                     <TableCell>{getNama(h.penghuniId)}</TableCell>
                     <TableCell>{monthLabel(h.mulai)}</TableCell>
                     <TableCell>
-                      {h.selesai ? monthLabel(h.selesai) : <Badge variant="outline">Aktif</Badge>}
+                      {h.selesai ? (
+                        monthLabel(h.selesai)
+                      ) : (
+                        <Badge variant="outline">Aktif</Badge>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -142,7 +162,10 @@ export default function RumahDetailPage() {
             <TableBody>
               {bayar.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center text-muted-foreground py-6">
+                  <TableCell
+                    colSpan={5}
+                    className="text-center text-muted-foreground py-6"
+                  >
                     Belum ada pembayaran
                   </TableCell>
                 </TableRow>
@@ -158,7 +181,9 @@ export default function RumahDetailPage() {
                   <TableCell>{formatRp(p.nominal * p.jumlahBulan)}</TableCell>
                   <TableCell>
                     {p.status === "lunas" ? (
-                      <Badge className="bg-[oklch(0.62_0.15_155)] text-white">Lunas</Badge>
+                      <Badge className="bg-[oklch(0.62_0.15_155)] text-white">
+                        Lunas
+                      </Badge>
                     ) : (
                       <Badge variant="destructive">Belum</Badge>
                     )}

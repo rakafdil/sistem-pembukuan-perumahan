@@ -34,7 +34,7 @@ export const useDeletePenghuni = () => {
 export const useUpdatePenghuni = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, data }: { id: number; data: FormData }) => {
+    mutationFn: async ({ id, data }: { id: string; data: FormData }) => {
       data.append("_method", "PUT");
       const res = await api.post(`penghuni/${id}`, data, {
         headers: { "Content-Type": "multipart/form-data" },

@@ -163,7 +163,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 29, 2026</li>
+        <li>Last updated: May 30, 2026</li>
     </ul>
 </div>
 
@@ -363,7 +363,48 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: []
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 7,
+            &quot;nama_lengkap&quot;: &quot;adfasdf&quot;,
+            &quot;foto_ktp_url&quot;: null,
+            &quot;status_penghuni&quot;: &quot;tetap&quot;,
+            &quot;nomor_telepon&quot;: null,
+            &quot;status_menikah&quot;: false,
+            &quot;status_menikah_label&quot;: &quot;Belum Menikah&quot;,
+            &quot;bergabung_sejak&quot;: &quot;29 May 2026&quot;
+        },
+        {
+            &quot;id&quot;: 3,
+            &quot;nama_lengkap&quot;: &quot;M. Raka&quot;,
+            &quot;foto_ktp_url&quot;: &quot;http://localhost:8000/storage/foto_ktp/ggmhWvZzXPhOVCenDWEvSEx2drhl46Rh7SEtmfUk.jpg&quot;,
+            &quot;status_penghuni&quot;: &quot;kontrak&quot;,
+            &quot;nomor_telepon&quot;: &quot;3232123&quot;,
+            &quot;status_menikah&quot;: false,
+            &quot;status_menikah_label&quot;: &quot;Belum Menikah&quot;,
+            &quot;bergabung_sejak&quot;: &quot;29 May 2026&quot;
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;nama_lengkap&quot;: &quot;Raka Fadillah&quot;,
+            &quot;foto_ktp_url&quot;: &quot;http://localhost:8000/storage/foto_ktp/gMBM4fYWFy9xdgWGaT5Agz6PvfS2h4RoSkGJIGrf.png&quot;,
+            &quot;status_penghuni&quot;: &quot;tetap&quot;,
+            &quot;nomor_telepon&quot;: &quot;123123123&quot;,
+            &quot;status_menikah&quot;: true,
+            &quot;status_menikah_label&quot;: &quot;Menikah&quot;,
+            &quot;bergabung_sejak&quot;: &quot;29 May 2026&quot;
+        },
+        {
+            &quot;id&quot;: 1,
+            &quot;nama_lengkap&quot;: &quot;Raka&quot;,
+            &quot;foto_ktp_url&quot;: &quot;http://localhost:8000/storage/foto_ktp/ffkiRZ9ukdH8Pw5frP2fXnXZBqOnDFe8bEBJZl9G.png&quot;,
+            &quot;status_penghuni&quot;: &quot;tetap&quot;,
+            &quot;nomor_telepon&quot;: &quot;085336678947&quot;,
+            &quot;status_menikah&quot;: false,
+            &quot;status_menikah_label&quot;: &quot;Belum Menikah&quot;,
+            &quot;bergabung_sejak&quot;: &quot;29 May 2026&quot;
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -458,9 +499,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --form "nomor_telepon=bngzmiyvdljnikhw"\
     --form "nama_lengkap=a"\
-    --form "status_penghuni=kontrak"\
+    --form "status_penghuni=tetap"\
     --form "status_menikah="\
-    --form "foto_ktp=@C:\Users\Asus\AppData\Local\Temp\phpB8B7.tmp" </code></pre></div>
+    --form "foto_ktp=@C:\Users\Asus\AppData\Local\Temp\php4376.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -476,7 +517,7 @@ const headers = {
 const body = new FormData();
 body.append('nomor_telepon', 'bngzmiyvdljnikhw');
 body.append('nama_lengkap', 'a');
-body.append('status_penghuni', 'kontrak');
+body.append('status_penghuni', 'tetap');
 body.append('status_menikah', '');
 body.append('foto_ktp', document.querySelector('input[name="foto_ktp"]').files[0]);
 
@@ -572,7 +613,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\Asus\AppData\Local\Temp\phpB8B7.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\Asus\AppData\Local\Temp\php4376.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>nomor_telepon</code></b>&nbsp;&nbsp;
@@ -605,10 +646,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status_penghuni"                data-endpoint="POSTapi-v1-penghuni"
-               value="kontrak"
+               value="tetap"
                data-component="body">
     <br>
-<p>Example: <code>kontrak</code></p>
+<p>Example: <code>tetap</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>tetap</code></li> <li><code>kontrak</code></li></ul>
         </div>
@@ -649,14 +690,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/penghuni/16" \
+    --get "http://localhost:8000/api/v1/penghuni/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/penghuni/16"
+    "http://localhost:8000/api/v1/penghuni/1"
 );
 
 const headers = {
@@ -674,7 +715,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-penghuni--id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -686,7 +727,16 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Penghuni] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;nama_lengkap&quot;: &quot;Raka&quot;,
+        &quot;foto_ktp_url&quot;: &quot;http://localhost:8000/storage/foto_ktp/ffkiRZ9ukdH8Pw5frP2fXnXZBqOnDFe8bEBJZl9G.png&quot;,
+        &quot;status_penghuni&quot;: &quot;tetap&quot;,
+        &quot;nomor_telepon&quot;: &quot;085336678947&quot;,
+        &quot;status_menikah&quot;: false,
+        &quot;status_menikah_label&quot;: &quot;Belum Menikah&quot;,
+        &quot;bergabung_sejak&quot;: &quot;29 May 2026&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -769,10 +819,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-v1-penghuni--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the penghuni. Example: <code>16</code></p>
+<p>The ID of the penghuni. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -789,19 +839,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/v1/penghuni/16" \
+    "http://localhost:8000/api/v1/penghuni/1" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
     --form "nomor_telepon=bngzmiyvdljnikhw"\
     --form "nama_lengkap=a"\
     --form "status_penghuni=tetap"\
-    --form "status_menikah="\
-    --form "foto_ktp=@C:\Users\Asus\AppData\Local\Temp\phpC27C.tmp" </code></pre></div>
+    --form "status_menikah=1"\
+    --form "foto_ktp=@C:\Users\Asus\AppData\Local\Temp\php4EB2.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/penghuni/16"
+    "http://localhost:8000/api/v1/penghuni/1"
 );
 
 const headers = {
@@ -813,7 +863,7 @@ const body = new FormData();
 body.append('nomor_telepon', 'bngzmiyvdljnikhw');
 body.append('nama_lengkap', 'a');
 body.append('status_penghuni', 'tetap');
-body.append('status_menikah', '');
+body.append('status_menikah', '1');
 body.append('foto_ktp', document.querySelector('input[name="foto_ktp"]').files[0]);
 
 fetch(url, {
@@ -909,10 +959,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PUTapi-v1-penghuni--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the penghuni. Example: <code>16</code></p>
+<p>The ID of the penghuni. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -925,7 +975,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\Asus\AppData\Local\Temp\phpC27C.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\Asus\AppData\Local\Temp\php4EB2.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>nomor_telepon</code></b>&nbsp;&nbsp;
@@ -985,7 +1035,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -1002,14 +1052,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/v1/penghuni/16" \
+    "http://localhost:8000/api/v1/penghuni/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/penghuni/16"
+    "http://localhost:8000/api/v1/penghuni/1"
 );
 
 const headers = {
@@ -1106,10 +1156,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-v1-penghuni--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the penghuni. Example: <code>16</code></p>
+<p>The ID of the penghuni. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -1163,7 +1213,14 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: []
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;blok_nomor&quot;: &quot;b&quot;,
+            &quot;status_huni&quot;: &quot;dihuni&quot;,
+            &quot;penghuni_aktif&quot;: null
+        }
+    ]
 }</code>
  </pre>
     </span>
@@ -1258,7 +1315,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"blok_nomor\": \"b\",
-    \"status_huni\": \"dihuni\"
+    \"status_huni\": \"kosong\",
+    \"penghuni_id\": \"architecto\"
 }"
 </code></pre></div>
 
@@ -1275,7 +1333,8 @@ const headers = {
 
 let body = {
     "blok_nomor": "b",
-    "status_huni": "dihuni"
+    "status_huni": "kosong",
+    "penghuni_id": "architecto"
 };
 
 fetch(url, {
@@ -1379,12 +1438,24 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status_huni"                data-endpoint="POSTapi-v1-rumah"
-               value="dihuni"
+               value="kosong"
                data-component="body">
     <br>
-<p>Example: <code>dihuni</code></p>
+<p>Example: <code>kosong</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>dihuni</code></li> <li><code>kosong</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>penghuni_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="penghuni_id"                data-endpoint="POSTapi-v1-rumah"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
         </div>
         </form>
 
@@ -1401,14 +1472,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/rumah/16" \
+    --get "http://localhost:8000/api/v1/rumah/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16"
+    "http://localhost:8000/api/v1/rumah/1"
 );
 
 const headers = {
@@ -1426,7 +1497,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-rumah--id-">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1438,7 +1509,13 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Rumah] 16&quot;
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;blok_nomor&quot;: &quot;b&quot;,
+        &quot;status_huni&quot;: &quot;dihuni&quot;,
+        &quot;penghuni_aktif&quot;: null,
+        &quot;histori_huni&quot;: []
+    }
 }</code>
  </pre>
     </span>
@@ -1521,10 +1598,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-v1-rumah--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -1541,7 +1618,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/api/v1/rumah/16" \
+    "http://localhost:8000/api/v1/rumah/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1552,7 +1629,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16"
+    "http://localhost:8000/api/v1/rumah/1"
 );
 
 const headers = {
@@ -1657,10 +1734,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PUTapi-v1-rumah--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -1690,14 +1767,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/api/v1/rumah/16" \
+    "http://localhost:8000/api/v1/rumah/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16"
+    "http://localhost:8000/api/v1/rumah/1"
 );
 
 const headers = {
@@ -1794,10 +1871,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-v1-rumah--id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -1814,14 +1891,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/rumah/16/histori" \
+    --get "http://localhost:8000/api/v1/rumah/1/histori" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16/histori"
+    "http://localhost:8000/api/v1/rumah/1/histori"
 );
 
 const headers = {
@@ -1839,7 +1916,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-rumah--rumah_id--histori">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1851,7 +1928,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Rumah] 16&quot;
+    &quot;data&quot;: []
 }</code>
  </pre>
     </span>
@@ -1934,10 +2011,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="rumah_id"                data-endpoint="GETapi-v1-rumah--rumah_id--histori"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -1954,19 +2031,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/v1/rumah/16/assign" \
+    "http://localhost:8000/api/v1/rumah/1/assign" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"penghuni_id\": \"architecto\",
-    \"tanggal_mulai\": \"2026-05-29T10:46:13\"
+    \"tanggal_mulai\": \"2026-05-30T01:21:21\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16/assign"
+    "http://localhost:8000/api/v1/rumah/1/assign"
 );
 
 const headers = {
@@ -1976,7 +2053,7 @@ const headers = {
 
 let body = {
     "penghuni_id": "architecto",
-    "tanggal_mulai": "2026-05-29T10:46:13"
+    "tanggal_mulai": "2026-05-30T01:21:21"
 };
 
 fetch(url, {
@@ -2068,10 +2145,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="rumah_id"                data-endpoint="POSTapi-v1-rumah--rumah_id--assign"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2093,10 +2170,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="tanggal_mulai"                data-endpoint="POSTapi-v1-rumah--rumah_id--assign"
-               value="2026-05-29T10:46:13"
+               value="2026-05-30T01:21:21"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-29T10:46:13</code></p>
+<p>Must be a valid date. Example: <code>2026-05-30T01:21:21</code></p>
         </div>
         </form>
 
@@ -2113,18 +2190,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/api/v1/rumah/16/unassign" \
+    "http://localhost:8000/api/v1/rumah/1/unassign" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"tanggal_selesai\": \"2026-05-29T10:46:14\"
+    \"tanggal_selesai\": \"2026-05-30T01:21:21\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16/unassign"
+    "http://localhost:8000/api/v1/rumah/1/unassign"
 );
 
 const headers = {
@@ -2133,7 +2210,7 @@ const headers = {
 };
 
 let body = {
-    "tanggal_selesai": "2026-05-29T10:46:14"
+    "tanggal_selesai": "2026-05-30T01:21:21"
 };
 
 fetch(url, {
@@ -2225,10 +2302,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="rumah_id"                data-endpoint="POSTapi-v1-rumah--rumah_id--unassign"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2238,10 +2315,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="tanggal_selesai"                data-endpoint="POSTapi-v1-rumah--rumah_id--unassign"
-               value="2026-05-29T10:46:14"
+               value="2026-05-30T01:21:21"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-29T10:46:14</code></p>
+<p>Must be a valid date. Example: <code>2026-05-30T01:21:21</code></p>
         </div>
         </form>
 
@@ -2258,14 +2335,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/v1/rumah/16/tagihan" \
+    --get "http://localhost:8000/api/v1/rumah/1/tagihan" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/v1/rumah/16/tagihan"
+    "http://localhost:8000/api/v1/rumah/1/tagihan"
 );
 
 const headers = {
@@ -2283,7 +2360,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-rumah--rumah_id--tagihan">
             <blockquote>
-            <p>Example response (404):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2295,7 +2372,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;No query results for model [App\\Models\\Rumah] 16&quot;
+    &quot;data&quot;: []
 }</code>
  </pre>
     </span>
@@ -2378,10 +2455,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="rumah_id"                data-endpoint="GETapi-v1-rumah--rumah_id--tagihan"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the rumah. Example: <code>16</code></p>
+<p>The ID of the rumah. Example: <code>1</code></p>
             </div>
                     </form>
 
@@ -2803,7 +2880,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"rumah_id\": \"architecto\",
-    \"tanggal_bayar\": \"2026-05-29T10:46:15\",
+    \"tanggal_bayar\": \"2026-05-30T01:21:22\",
     \"total_bayar\": 22,
     \"metode_pembayaran\": \"g\",
     \"catatan\": \"architecto\"
@@ -2823,7 +2900,7 @@ const headers = {
 
 let body = {
     "rumah_id": "architecto",
-    "tanggal_bayar": "2026-05-29T10:46:15",
+    "tanggal_bayar": "2026-05-30T01:21:22",
     "total_bayar": 22,
     "metode_pembayaran": "g",
     "catatan": "architecto"
@@ -2942,10 +3019,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="tanggal_bayar"                data-endpoint="POSTapi-v1-pembayaran"
-               value="2026-05-29T10:46:15"
+               value="2026-05-30T01:21:22"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-29T10:46:15</code></p>
+<p>Must be a valid date. Example: <code>2026-05-30T01:21:22</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>total_bayar</code></b>&nbsp;&nbsp;
@@ -3285,7 +3362,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"deskripsi\": \"architecto\",
     \"nominal\": 22,
-    \"tanggal_pengeluaran\": \"2026-05-29T10:46:15\"
+    \"tanggal_pengeluaran\": \"2026-05-30T01:21:23\"
 }"
 </code></pre></div>
 
@@ -3303,7 +3380,7 @@ const headers = {
 let body = {
     "deskripsi": "architecto",
     "nominal": 22,
-    "tanggal_pengeluaran": "2026-05-29T10:46:15"
+    "tanggal_pengeluaran": "2026-05-30T01:21:23"
 };
 
 fetch(url, {
@@ -3431,10 +3508,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="tanggal_pengeluaran"                data-endpoint="POSTapi-v1-pengeluaran"
-               value="2026-05-29T10:46:15"
+               value="2026-05-30T01:21:23"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-29T10:46:15</code></p>
+<p>Must be a valid date. Example: <code>2026-05-30T01:21:23</code></p>
         </div>
         </form>
 
@@ -3597,7 +3674,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"deskripsi\": \"architecto\",
     \"nominal\": 22,
-    \"tanggal_pengeluaran\": \"2026-05-29T10:46:15\"
+    \"tanggal_pengeluaran\": \"2026-05-30T01:21:23\"
 }"
 </code></pre></div>
 
@@ -3615,7 +3692,7 @@ const headers = {
 let body = {
     "deskripsi": "architecto",
     "nominal": 22,
-    "tanggal_pengeluaran": "2026-05-29T10:46:15"
+    "tanggal_pengeluaran": "2026-05-30T01:21:23"
 };
 
 fetch(url, {
@@ -3760,10 +3837,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="tanggal_pengeluaran"                data-endpoint="PUTapi-v1-pengeluaran--id-"
-               value="2026-05-29T10:46:15"
+               value="2026-05-30T01:21:23"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-05-29T10:46:15</code></p>
+<p>Must be a valid date. Example: <code>2026-05-30T01:21:23</code></p>
         </div>
         </form>
 
